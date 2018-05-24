@@ -41,7 +41,7 @@ export function matchFuzzy(
     getPossibleCombinations(occurencesPerChar, combinations);
 
     for (const set of combinations) {
-        if (!hasLessThanMaximumCharacters(target, set, characterLimit)) continue;
+        if (!hasLessThanMaximumCharacters(targetLowerCased, set, characterLimit)) continue;
 
         const extraCharCount = calculateExtraChars(set);
         if (!bestCombination || bestCombination[0] > extraCharCount) bestCombination = [extraCharCount, set];
@@ -72,8 +72,9 @@ export function sort(a: MatchResult, b: MatchResult): 1 | -1 | 0 {
 
 function hasLessThanMaximumCharacters(target: string, foundChars: number[], charLimits: { [char: string]: number }) {
     for (const character in charLimits) {
+        const characterLowerCased = character.toLowerCase();
         const subString = target.substring(foundChars[0], foundChars[foundChars.length - 1]);
-        if (findOccurences(subString, character).length > charLimits[character]) return false;
+        if (findOccurences(subString, characterLowerCased).length > charLimits[characterLowerCased]) return false;
     }
 
     return true;
