@@ -1,0 +1,46 @@
+{
+  "name": "matchfuzzy",
+  "version": "0.0.0",
+  "description": "Match your query fuzzy on given target",
+  "main": "lib/index.js",
+  "scripts": {
+    "build": "rm -rf lib && tsc",
+    "prepublish": "yarn build",
+    "test": "jest",
+    "test:watch": "jest --watch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/guidojo/matchFuzzy.git"
+  },
+  "keywords": [
+    "match",
+    "fuzzy",
+    "search"
+  ],
+  "author": "guidojo",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/guidojo/matchFuzzy/issues"
+  },
+  "homepage": "https://github.com/guidojo/matchFuzzy#readme",
+  "devDependencies": {
+    "@types/jest": "22.2.3",
+    "jest": "22.4.4",
+    "prettier": "^1.12.1",
+    "typescript": "2.8.3"
+  },
+  "jest": {
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js"
+    ],
+    "transform": {
+      "^.+\\.(ts|tsx)$": "<rootDir>/jest.preprocessor.js"
+    },
+    "testMatch": [
+      "**/__tests__/*.(ts|tsx)"
+    ]
+  }
+}
