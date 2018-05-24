@@ -14,8 +14,13 @@ export type MatchResult = {
  *
  * @param query the string you search with
  * @param target the string you search in
+ * @param characterLimit maximum amount of characters in result. Example: { " ": 6, ".": 0 } means a sentence with a maximum of 6 spaces.
  */
-export function matchFuzzy(query: string, target: string): MatchResult | null {
+export function matchFuzzy(
+    query: string,
+    target: string,
+    characterLimit: { [character: string]: number } = {}
+): MatchResult | null {
     if (!target || !query || target.length < query.length) return null;
 
     const queryLowerCased = query.toLowerCase();
@@ -36,18 +41,22 @@ export function matchFuzzy(query: string, target: string): MatchResult | null {
     getPossibleCombinations(occurencesPerChar, combinations);
 
     for (const set of combinations) {
+        if (!hasLessThanMaximumCharacters(target, set, characterLimit)) continue;
+
         const extraCharCount = calculateExtraChars(set);
         if (!bestCombination || bestCombination[0] > extraCharCount) bestCombination = [extraCharCount, set];
         // Better than 0 character difference isn't possible, so just break;
         if (bestCombination[0] === 0) break;
     }
 
-    return {
-        offset: bestCombination![1][0],
-        positions: bestCombination![1],
-        extraChars: bestCombination![0],
-        trailingChars: target.length - (bestCombination![1][bestCombination![1].length - 1] + 1)
-    };
+    return bestCombination !== null
+        ? {
+              offset: bestCombination[1][0],
+              positions: bestCombination[1],
+              extraChars: bestCombination[0],
+              trailingChars: target.length - (bestCombination[1][bestCombination![1].length - 1] + 1)
+          }
+        : null;
 }
 
 export function sort(a: MatchResult, b: MatchResult): 1 | -1 | 0 {
@@ -59,6 +68,15 @@ export function sort(a: MatchResult, b: MatchResult): 1 | -1 | 0 {
     if (a.trailingChars !== b.trailingChars) return a.trailingChars < b.trailingChars ? -1 : 1;
     // There can be an equal match, then we don't really care
     return 0;
+}
+
+function hasLessThanMaximumCharacters(target: string, foundChars: number[], charLimits: { [char: string]: number }) {
+    for (const character in charLimits) {
+        const subString = target.substring(foundChars[0], foundChars[foundChars.length - 1]);
+        if (findOccurences(subString, character).length > charLimits[character]) return false;
+    }
+
+    return true;
 }
 
 function getPossibleCombinations(characterPositions: number[][], result: number[][], depth = 0) {
