@@ -7,7 +7,8 @@
     "build": "rm -rf lib && tsc",
     "prepublish": "yarn build",
     "test": "jest",
-    "test:watch": "jest --watch"
+    "test:watch": "jest --watch",
+    "test:travis": "jest --coverage --coverageReporters=text-lcov | coveralls"
   },
   "repository": {
     "type": "git",
@@ -26,6 +27,7 @@
   "homepage": "https://github.com/guidojo/matchFuzzy#readme",
   "devDependencies": {
     "@types/jest": "22.2.3",
+    "coveralls": "^3.0.1",
     "jest": "22.4.4",
     "prettier": "^1.12.1",
     "typescript": "2.8.3"
