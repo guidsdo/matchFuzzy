@@ -1,17 +1,17 @@
 {
     "compilerOptions": {
+
         "target": "es6",
         "module": "commonjs",
         "lib": ["es6"],
-        "declaration": false,
+        "declaration": true,
         "experimentalDecorators": true,
-        "sourceMap": true,
         "jsx": "react",
         "outDir": "lib",
         "moduleResolution": "node",
         "noEmitOnError": true,
         "noImplicitAny": true
     },
-    "include": ["src"],
+    "include": ["src/index.ts"],
     "exclude": ["node_modules"]
 }
