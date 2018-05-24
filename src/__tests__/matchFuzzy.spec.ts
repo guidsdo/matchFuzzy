@@ -46,15 +46,45 @@ describe("matchFuzzy", () => {
     });
 
     describe("when passing character limits", () => {
-        const target = "This iz a pretty long sentence. Yes, pretty long. Really, pretty long, very much.";
+        const target = "This iz a pretty long; sentence. Yes, pretty long. Really, pretty long, sentence very much.";
 
         it("finds a match where below limits", () => {
             const result = matchFuzzy("iz much", target, { x: 0 })!;
 
             expect(result.offset).toBe(5);
-            expect(result.positions).toEqual([5, 6, 7, 76, 77, 78, 79]);
-            expect(result.extraChars).toBe(68);
+            expect(result.positions).toEqual([5, 6, 7, 86, 87, 88, 89]);
+            expect(result.extraChars).toBe(78);
             expect(result.trailingChars).toBe(1);
+        });
+
+        it("finds a match with some limits", () => {
+            const result = matchFuzzy("pretty long sentence", target, { ",": 0 })!;
+
+            expect(result.offset).toBe(10);
+            expect(result.extraChars).toBe(1);
+            expect(result.trailingChars).toBe(60);
+            expect(result.positions).toEqual([
+                10,
+                11,
+                12,
+                13,
+                14,
+                15,
+                16,
+                17,
+                18,
+                19,
+                20,
+                22,
+                23,
+                24,
+                25,
+                26,
+                27,
+                28,
+                29,
+                30
+            ]);
         });
 
         it("finds no match where above limits", () => {

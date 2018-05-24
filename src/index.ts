@@ -59,6 +59,12 @@ export function matchFuzzy(
         : null;
 }
 
+/**
+ * Array sort function in order: extra chars, offset, trailing chars.
+ *
+ * @param a result a
+ * @param b result b
+ */
 export function sort(a: MatchResult, b: MatchResult): 1 | -1 | 0 {
     // How much extra characters are inbetween each character of the search query? Better match = higher rank
     if (a.extraChars !== b.extraChars) return a.extraChars < b.extraChars ? -1 : 1;
