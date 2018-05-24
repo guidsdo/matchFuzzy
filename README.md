@@ -7,6 +7,13 @@ Match your query fuzzy on given target
 [![Known Vulnerabilities](https://snyk.io/test/github/guidojo/matchFuzzy:package.json/badge.svg?targetFile=package.json)](https://snyk.io/test/github/guidojo/matchFuzzy:package.json?targetFile=package.json)
 [![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg)](https://github.com/prettier/prettier)
 
+## Example (UI excluded)
+Input = `he`
+
+Result = highlighted characters
+
+<img src="https://github.com/guidojo/matchFuzzy/blob/master/images/example.png?raw=true" />
+
 ## Usage
 Below is the type definition of the exported functions. For any issues or questions, just create an issue and I'll respond asap.
 
